@@ -1,0 +1,693 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세이프머니 | 나의 든든한 비상금</title>
+<style>
+:root {
+  --blue:#2563eb;
+  --dark:#15223b;
+  --muted:#64748b;
+  --bg:#f4f7fc;
+  --green:#059669;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--dark);
+  font-family:Arial,"Malgun Gothic",sans-serif;
+  line-height:1.6;
+}
+header {
+  background:white;
+  padding:18px 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 2px 12px #15223b0b;
+}
+.logo { font-size:23px;font-weight:900;color:var(--blue); }
+.logo span { color:var(--dark); }
+.tag { font-size:12px;color:var(--muted); }
+main { max-width:1080px;margin:auto;padding:25px 18px 60px; }
+.hero {
+  padding:36px;
+  border-radius:22px;
+  color:white;
+  background:linear-gradient(120deg,#2563eb,#123b94);
+  margin-bottom:22px;
+}
+.hero h1 { font-size:30px;margin:0 0 10px; }
+.hero p { margin:0;opacity:.9; }
+.grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.card {
+  background:white;
+  padding:26px;
+  border-radius:20px;
+  box-shadow:0 5px 25px #14294d0b;
+  margin-bottom:20px;
+}
+.card h2 { margin:0 0 18px;font-size:20px; }
+label {
+  display:block;
+  font-weight:700;
+  font-size:14px;
+  margin:15px 0 6px;
+}
+input,select {
+  width:100%;
+  padding:13px;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+  font-size:16px;
+  background:white;
+}
+input:focus,select:focus {
+  outline:2px solid #93c5fd;
+  border-color:var(--blue);
+}
+button {
+  cursor:pointer;
+  border:0;
+  border-radius:11px;
+  padding:13px 18px;
+  font-weight:800;
+  font-size:15px;
+  transition:.2s;
+}
+button:hover { filter:brightness(.94);transform:translateY(-1px); }
+button:disabled { opacity:.45;cursor:not-allowed;transform:none; }
+.primary { background:var(--blue);color:white;width:100%;margin-top:20px; }
+.secondary { background:#eaf1ff;color:var(--blue); }
+.danger { background:#fee2e2;color:#b91c1c; }
+.muted { color:var(--muted);font-size:13px; }
+.result {
+  background:#eff6ff;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+  margin-top:15px;
+}
+.big { font-size:32px;font-weight:900;color:var(--blue); }
+.stat {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin:12px 0;
+  font-size:14px;
+}
+.stat strong { text-align:right; }
+.progress {
+  background:#e2e8f0;
+  height:16px;
+  border-radius:20px;
+  overflow:hidden;
+  margin:12px 0;
+}
+.bar {
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#38bdf8,#2563eb);
+  border-radius:20px;
+  transition:width .5s;
+}
+.rank {
+  text-align:center;
+  background:#f8fafc;
+  padding:18px;
+  border-radius:15px;
+}
+.rank-icon { font-size:50px; }
+.badges { display:flex;flex-wrap:wrap;gap:10px;margin-top:14px; }
+.badge {
+  padding:10px 12px;
+  border-radius:12px;
+  background:#e8f8ef;
+  color:#047857;
+  font-size:13px;
+  font-weight:bold;
+}
+.badge.locked { background:#f1f5f9;color:#94a3b8; }
+.coach {
+  padding:18px;
+  border-radius:14px;
+  background:#f0fdf4;
+  border-left:5px solid #10b981;
+  margin-top:14px;
+}
+.message { font-size:13px;margin-top:10px;min-height:18px; }
+.error { color:#dc2626; }
+.success { color:var(--green); }
+.actions { display:flex;gap:10px;flex-wrap:wrap;margin-top:14px; }
+.actions button { flex:1; }
+.history {
+  padding:0;
+  list-style:none;
+  max-height:240px;
+  overflow:auto;
+}
+.history li {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid #e2e8f0;
+  font-size:13px;
+}
+.history small { color:var(--muted); }
+footer { text-align:center;color:var(--muted);font-size:12px;padding:20px; }
+@media(max-width:700px) {
+  .grid { grid-template-columns:1fr;gap:0; }
+  .hero { padding:25px; }
+  .hero h1 { font-size:24px; }
+  .card { padding:20px; }
+  .big { font-size:27px; }
+  header { padding:15px 20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🛡️ 세이프<span>머니</span></div>
+  <div class="tag">SAFE MONEY · 비상금 관리</div>
+</header>
+
+<main>
+<section class="hero">
+  <h1>갑작스러운 지출에도<br>흔들리지 않는 나 💙</h1>
+  <p>월급과 지출을 입력하고 나에게 맞는 비상금을 모아보세요.<br>
+  작은 저축이 든든한 안전망이 됩니다.</p>
+</section>
+
+<div class="grid">
+<section class="card">
+  <h2>💰 나의 월 소득과 지출</h2>
+  <p class="muted">금액을 입력하면 추천 비상금을 계산해 드려요.</p>
+
+  <label for="income">월 소득 (원)</label>
+  <input id="income" type="number" min="0" step="1000"
+         placeholder="예: 3000000">
+
+  <label for="fixed">월 고정지출 (원)</label>
+  <input id="fixed" type="number" min="0" step="1000"
+         placeholder="월세, 통신비 등">
+
+  <label for="variable">월 변동지출 (원)</label>
+  <input id="variable" type="number" min="0" step="1000"
+         placeholder="식비, 쇼핑, 교통비 등">
+
+  <label for="rate">여유 자금 중 적립할 비율</label>
+  <select id="rate">
+    <option value="0.1">10% · 가볍게 시작</option>
+    <option value="0.2" selected>20% · 균형 잡힌 저축</option>
+    <option value="0.3">30% · 적극적인 저축</option>
+    <option value="0.5">50% · 빠른 목표 달성</option>
+  </select>
+
+  <button class="primary" onclick="calculate()">✨ 내 비상금 추천받기</button>
+  <div id="calcMessage" class="message" role="status"></div>
+</section>
+
+<section class="card">
+  <h2>📊 이번 달 추천 적립액</h2>
+  <p class="muted">입력한 소득과 지출을 바탕으로 계산합니다.</p>
+
+  <div class="result">
+    <div class="muted">이번 달 추천 비상금</div>
+    <div id="recommend" class="big">0원</div>
+    <div id="resultText" class="muted">정보를 입력해 주세요.</div>
+  </div>
+
+  <div class="stat"><span>월 소득</span><strong id="showIncome">0원</strong></div>
+  <div class="stat"><span>고정지출</span><strong id="showFixed">0원</strong></div>
+  <div class="stat"><span>변동지출</span><strong id="showVariable">0원</strong></div>
+  <div class="stat"><span>남는 금액</span><strong id="remaining">0원</strong></div>
+  <div class="stat"><span>추천 적립 비율</span><strong id="showRate">20%</strong></div>
+
+  <button id="saveRecommended" class="primary"
+          onclick="saveRecommended()" disabled>
+    🏦 추천 금액 모의 적립하기
+  </button>
+  <p class="muted">※ 실제 계좌에서 돈이 이체되지는 않습니다.</p>
+</section>
+</div>
+
+<div class="grid">
+<section class="card">
+  <h2>🎯 나의 비상금 목표</h2>
+
+  <label for="goal">목표 비상금 (원)</label>
+  <input id="goal" type="number" min="1" step="1000"
+         value="3000000">
+  <button class="secondary" style="margin-top:10px"
+          onclick="setGoal()">목표 설정하기</button>
+
+  <div class="stat"><span>현재 비상금</span><strong id="balance">0원</strong></div>
+  <div class="stat"><span>설정한 목표</span><strong id="showGoal">3,000,000원</strong></div>
+
+  <div class="progress" role="progressbar" id="progressTrack"
+       aria-label="비상금 목표 달성률" aria-valuemin="0"
+       aria-valuemax="100" aria-valuenow="0">
+    <div id="progressBar" class="bar"></div>
+  </div>
+  <div class="stat"><strong id="percent">0% 달성</strong>
+    <span id="left">3,000,000원 남음</span></div>
+
+  <label for="customAmount">직접 적립할 금액 (원)</label>
+  <input id="customAmount" type="number" min="1" step="1000"
+         placeholder="예: 50000">
+
+  <div class="actions">
+    <button class="secondary" onclick="customSave()">➕ 모의 적립</button>
+    <button class="danger" onclick="withdraw()">➖ 모의 인출</button>
+  </div>
+  <div id="saveMessage" class="message" role="status"></div>
+</section>
+
+<section class="card">
+  <h2>🏅 나의 비상금 등급</h2>
+  <div class="rank">
+    <div id="rankIcon" class="rank-icon">🌱</div>
+    <h2 id="rankName">씨앗 저축러</h2>
+    <p id="rankText" class="muted">첫 비상금을 모아보세요!</p>
+  </div>
+
+  <h3>획득 가능한 배지</h3>
+  <div class="badges">
+    <span id="badge1" class="badge locked">🔒 첫 적립</span>
+    <span id="badge2" class="badge locked">🔒 25% 달성</span>
+    <span id="badge3" class="badge locked">🔒 50% 달성</span>
+    <span id="badge4" class="badge locked">🔒 75% 달성</span>
+    <span id="badge5" class="badge locked">🔒 목표 달성</span>
+  </div>
+  <p class="muted">목표 달성률에 따라 등급과 배지가 바뀝니다.</p>
+</section>
+</div>
+
+<section class="card">
+  <h2>🤖 세이프머니 금융 코치</h2>
+  <p class="muted">나의 수입, 지출, 저축 상황에 맞춘 금융 조언</p>
+  <div class="coach" id="coachText">
+    월 소득과 지출을 입력하면 맞춤형 조언을 알려드릴게요!
+  </div>
+  <button class="secondary" style="margin-top:14px"
+          onclick="showCoaching()">💡 금융 코칭 다시 받기</button>
+  <p class="muted">
+    ※ 외부 AI를 사용하지 않는 규칙 기반 금융 코칭입니다.
+  </p>
+</section>
+
+<section class="card">
+  <h2>📅 나의 모의 적립 기록</h2>
+  <ul id="history" class="history"></ul>
+  <button class="danger" onclick="resetData()">전체 데이터 초기화</button>
+</section>
+</main>
+
+<footer>
+  © 2026 SafeMoney · 금융 교육 및 해커톤 시연용 서비스<br>
+  실제 금융 거래, 자동이체, 투자 자문 기능은 제공하지 않습니다.
+</footer>
+
+<script>
+const KEY = "safemoney_demo_v1";
+
+function defaultState() {
+  return {
+    income: null,
+    fixed: null,
+    variable: null,
+    rate: 0.2,
+    recommendation: 0,
+    calculated: false,
+    goal: 3000000,
+    balance: 0,
+    history: []
+  };
+}
+
+let state = defaultState();
+
+function won(value) {
+  return Math.round(value).toLocaleString("ko-KR") + "원";
+}
+
+function el(id) {
+  return document.getElementById(id);
+}
+
+function message(id, text, error = false) {
+  el(id).textContent = text;
+  el(id).className = "message " + (error ? "error" : "success");
+}
+
+function readNumber(id, allowZero = true) {
+  const raw = el(id).value.trim();
+  if (raw === "") return null;
+  const n = Number(raw);
+  if (!Number.isFinite(n) || !Number.isSafeInteger(n) ||
+      n < 0 || (!allowZero && n === 0)) return null;
+  return n;
+}
+
+function persist() {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(state));
+  } catch (e) {
+    message("saveMessage", "브라우저 저장 공간을 사용할 수 없습니다.", true);
+  }
+}
+
+function load() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY));
+    if (saved && typeof saved === "object") {
+      state = {...defaultState(), ...saved};
+      if (!Array.isArray(state.history)) state.history = [];
+    }
+  } catch (e) {
+    state = defaultState();
+  }
+
+  if (state.income !== null) el("income").value = state.income;
+  if (state.fixed !== null) el("fixed").value = state.fixed;
+  if (state.variable !== null) el("variable").value = state.variable;
+  el("rate").value = String(state.rate);
+  el("goal").value = state.goal;
+  render();
+}
+
+function calculate() {
+  const income = readNumber("income");
+  const fixed = readNumber("fixed");
+  const variable = readNumber("variable");
+  const rate = Number(el("rate").value);
+
+  if (income === null || income === 0 ||
+      fixed === null || variable === null) {
+    message("calcMessage",
+      "월 소득은 0원보다 크게, 지출은 0원 이상으로 입력해 주세요.", true);
+    return;
+  }
+
+  if (fixed + variable > income) {
+    message("calcMessage",
+      "지출이 소득보다 많습니다. 지출을 먼저 점검해 주세요.", true);
+    state.calculated = false;
+    state.recommendation = 0;
+    render();
+    persist();
+    return;
+  }
+
+  const remaining = income - fixed - variable;
+  const recommendation = Math.floor(remaining * rate);
+
+  state.income = income;
+  state.fixed = fixed;
+  state.variable = variable;
+  state.rate = rate;
+  state.recommendation = recommendation;
+  state.calculated = true;
+
+  message("calcMessage", "맞춤 비상금 계산이 완료되었습니다!");
+  persist();
+  render();
+}
+
+function setGoal() {
+  const goal = readNumber("goal", false);
+  if (goal === null) {
+    message("saveMessage", "목표 금액은 1원 이상으로 입력해 주세요.", true);
+    return;
+  }
+  state.goal = goal;
+  persist();
+  render();
+  message("saveMessage", "새로운 비상금 목표를 설정했습니다!");
+}
+
+function addHistory(type, amount) {
+  state.history.unshift({
+    type,
+    amount,
+    date: new Date().toLocaleString("ko-KR")
+  });
+  state.history = state.history.slice(0, 100);
+}
+
+function deposit(amount) {
+  if (!Number.isSafeInteger(amount) || amount <= 0) {
+    message("saveMessage", "적립 금액은 1원 이상이어야 합니다.", true);
+    return;
+  }
+  if (!Number.isSafeInteger(state.balance + amount)) {
+    message("saveMessage", "적립할 수 있는 금액 범위를 초과했습니다.", true);
+    return;
+  }
+
+  state.balance += amount;
+  addHistory("적립", amount);
+  persist();
+  render();
+  message("saveMessage", won(amount) + " 모의 적립 완료! 🎉");
+}
+
+function saveRecommended() {
+  if (!state.calculated || state.recommendation <= 0) return;
+  deposit(state.recommendation);
+}
+
+function customSave() {
+  const amount = readNumber("customAmount", false);
+  if (amount === null) {
+    message("saveMessage", "올바른 적립 금액을 입력해 주세요.", true);
+    return;
+  }
+  deposit(amount);
+  el("customAmount").value = "";
+}
+
+function withdraw() {
+  const amount = readNumber("customAmount", false);
+  if (amount === null) {
+    message("saveMessage", "인출할 금액을 입력해 주세요.", true);
+    return;
+  }
+  if (amount > state.balance) {
+    message("saveMessage", "현재 비상금보다 많이 인출할 수 없습니다.", true);
+    return;
+  }
+
+  state.balance -= amount;
+  addHistory("인출", amount);
+  persist();
+  render();
+  message("saveMessage", won(amount) + " 모의 인출 완료");
+  el("customAmount").value = "";
+}
+
+function getProgress() {
+  return state.goal > 0 ? state.balance / state.goal * 100 : 0;
+}
+
+function renderRank() {
+  const p = getProgress();
+  let icon, name, description;
+
+  if (p >= 100) {
+    icon = "👑"; name = "비상금 마스터";
+    description = "목표 달성! 든든한 안전망을 만들었어요!";
+  } else if (p >= 75) {
+    icon = "💎"; name = "다이아 저축러";
+    description = "목표가 코앞이에요!";
+  } else if (p >= 50) {
+    icon = "🥇"; name = "골드 저축러";
+    description = "벌써 절반을 달성했어요!";
+  } else if (p >= 25) {
+    icon = "🥈"; name = "실버 저축러";
+    description = "꾸준한 저축 습관이 만들어지고 있어요!";
+  } else {
+    icon = "🌱"; name = "씨앗 저축러";
+    description = "작은 시작이 큰 안전망이 됩니다.";
+  }
+
+  el("rankIcon").textContent = icon;
+  el("rankName").textContent = name;
+  el("rankText").textContent = description;
+
+  const firstDeposit = state.history.some(h => h.type === "적립");
+  const badges = [
+    firstDeposit, p >= 25, p >= 50, p >= 75, p >= 100
+  ];
+  const labels = [
+    "첫 적립", "25% 달성", "50% 달성",
+    "75% 달성", "목표 달성"
+  ];
+  const icons = ["🌱","🥈","🥇","💎","👑"];
+
+  badges.forEach((earned, i) => {
+    const node = el("badge" + (i + 1));
+    node.className = earned ? "badge" : "badge locked";
+    node.textContent = (earned ? icons[i] : "🔒") + " " + labels[i];
+  });
+}
+
+function showCoaching() {
+  const tips = [];
+
+  if (!state.calculated) {
+    el("coachText").textContent =
+      "먼저 월 소득과 지출을 입력해 주세요. 나에게 맞는 저축 계획을 알려드릴게요.";
+    return;
+  }
+
+  const remaining = state.income - state.fixed - state.variable;
+  const spendingRate =
+    (state.fixed + state.variable) / state.income;
+
+  if (spendingRate >= 0.8) {
+    tips.push("⚠️ 소득의 80% 이상을 지출하고 있어요. 작은 소비부터 점검해 보세요.");
+  } else if (spendingRate <= 0.5) {
+    tips.push("👏 지출을 잘 관리하고 있어요! 여유 자금의 일부를 꾸준히 모아보세요.");
+  } else {
+    tips.push("💡 현재 지출 수준을 확인하며 무리 없는 적립을 이어가세요.");
+  }
+
+  if (state.recommendation === 0) {
+    tips.push("이번 달 여유 자금이 부족합니다. 저축보다 생활비 안정이 우선이에요.");
+  } else {
+    tips.push("💰 이번 달에는 " + won(state.recommendation) +
+      "을 비상금으로 적립해 보는 것을 추천해요.");
+  }
+
+  const monthlyExpenses = state.fixed + state.variable;
+  if (monthlyExpenses > 0) {
+    const months = state.balance / monthlyExpenses;
+    tips.push("🛡️ 현재 비상금은 입력한 월 지출의 약 " +
+      months.toFixed(1) + "개월분이에요. 일반적으로 3~6개월치 필수 생활비를 비상금 목표의 출발점으로 고려할 수 있어요.");
+  }
+
+  if (state.balance >= state.goal) {
+    tips.push("🎉 설정한 목표를 달성했어요! 다음 목표도 세워보세요.");
+  } else if (state.recommendation > 0) {
+    const monthsLeft = Math.ceil(
+      Math.max(0, state.goal - state.balance) / state.recommendation
+    );
+    tips.push("📅 추천 금액을 매월 적립한다면 약 " +
+      monthsLeft + "개월 후 목표에 도달할 수 있어요.");
+  }
+
+  el("coachText").textContent = tips.join("\n\n");
+  el("coachText").style.whiteSpace = "pre-line";
+}
+
+function renderHistory() {
+  const list = el("history");
+  list.replaceChildren();
+
+  if (state.history.length === 0) {
+    const li = document.createElement("li");
+    li.textContent = "아직 적립 기록이 없습니다.";
+    list.appendChild(li);
+    return;
+  }
+
+  state.history.forEach(item => {
+    const li = document.createElement("li");
+    const left = document.createElement("span");
+    const right = document.createElement("strong");
+    const small = document.createElement("small");
+
+    left.textContent = item.type + " · ";
+    small.textContent = item.date;
+    left.appendChild(small);
+
+    right.textContent =
+      (item.type === "적립" ? "+" : "-") + won(item.amount);
+    right.style.color =
+      item.type === "적립" ? "#059669" : "#dc2626";
+
+    li.append(left, right);
+    list.appendChild(li);
+  });
+}
+
+function render() {
+  el("recommend").textContent = won(state.recommendation);
+  el("showIncome").textContent = won(state.income || 0);
+  el("showFixed").textContent = won(state.fixed || 0);
+  el("showVariable").textContent = won(state.variable || 0);
+
+  const remaining = state.calculated ?
+    state.income - state.fixed - state.variable : 0;
+
+  el("remaining").textContent = won(remaining);
+  el("showRate").textContent =
+    Math.round(state.rate * 100) + "%";
+
+  el("resultText").textContent = state.calculated ?
+    "여유 자금의 " + Math.round(state.rate * 100) +
+    "%를 기준으로 계산했어요." :
+    "소득과 지출을 입력해 주세요.";
+
+  el("saveRecommended").disabled =
+    !state.calculated || state.recommendation <= 0;
+
+  el("balance").textContent = won(state.balance);
+  el("showGoal").textContent = won(state.goal);
+
+  const progress = getProgress();
+  const displayProgress = Math.min(100, progress);
+
+  el("progressBar").style.width = displayProgress + "%";
+  el("percent").textContent = progress.toFixed(1) + "% 달성";
+  el("left").textContent =
+    state.balance >= state.goal ?
+    "목표 달성! 🎉" : won(state.goal - state.balance) + " 남음";
+  el("progressTrack").setAttribute(
+    "aria-valuenow", displayProgress.toFixed(1)
+  );
+
+  renderRank();
+  renderHistory();
+  showCoaching();
+}
+
+function resetData() {
+  if (!confirm("모든 모의 적립 기록과 설정을 초기화할까요?")) return;
+  state = defaultState();
+  localStorage.removeItem(KEY);
+
+  ["income","fixed","variable","customAmount"].forEach(id => {
+    el(id).value = "";
+  });
+  el("rate").value = "0.2";
+  el("goal").value = "3000000";
+  el("calcMessage").textContent = "";
+  el("saveMessage").textContent = "";
+  render();
+}
+
+["income","fixed","variable","rate"].forEach(id => {
+  el(id).addEventListener("input", () => {
+    state.calculated = false;
+    state.recommendation = 0;
+    el("calcMessage").textContent =
+      "입력값이 변경되었습니다. 다시 계산해 주세요.";
+    render();
+  });
+});
+
+load();
+</script>
+</body>
+</html>
